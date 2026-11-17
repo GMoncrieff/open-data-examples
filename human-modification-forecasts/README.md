@@ -59,12 +59,12 @@ The forecasts are **conditional on the continuation of historical relationships 
 
 ## Accessing the data
 
-The data are in a public S3 bucket in `us-east-1`. No AWS account or credentials are needed.
+The data are in a public S3 bucket in `us-west-2`. No AWS account or credentials are needed.
 
 | | |
 |---|---|
 | Bucket | `s3://tnc-human-modification` |
-| Region | `us-east-1` |
+| Region | `us-west-2` |
 | Repository prefix | `hm_probability_forecast` |
 | Format | [Icechunk](https://icechunk.io) repository of [Zarr v3](https://zarr.dev) arrays |
 | Branch | `main` |
@@ -82,7 +82,7 @@ import xarray as xr
 storage = icechunk.s3_storage(
     bucket="tnc-human-modification",
     prefix="hm_probability_forecast",
-    region="us-east-1",
+    region="us-west-2",
     anonymous=True,
 )
 repo = icechunk.Repository.open(storage)
@@ -95,7 +95,7 @@ observed = xr.open_zarr(session.store, group="hm_observed", consolidated=False, 
 px = forecast.hm.sel(latitude=0.05, longitude=37.05, method="nearest").load()
 ```
 
-`chunks=None` gives lazy arrays without dask, which suits regional work. For continental or global analysis, use `chunks={}` to get dask arrays aligned to the stored chunks, and run close to the data in `us-east-1` (EC2, SageMaker AI, or a Dask cluster).
+`chunks=None` gives lazy arrays without dask, which suits regional work. For continental or global analysis, use `chunks={}` to get dask arrays aligned to the stored chunks, and run close to the data in `us-west-2` (EC2, SageMaker AI, or a Dask cluster).
 
 ### Browsing the raw objects
 
